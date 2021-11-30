@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" >
+
+        //輸入名字與ID建立玩家，玩家屬性有名字、ID、是否為首家、玩家被分派到的角色、玩家應該知道的遊戲資訊
+        class Player{
+                    constructor(userName, userId) {
+                        this.name = userName;
+                        this.id = userId;
+                        this.isFirstPlayer = false;
+                        this.role;
+                        this.gameInfo;
+                    }
+        }
+
+        //輸入四個玩家物件來建立遊戲
+        class Game{
+            constructor(player1, player2, player3, player4) {
+                this.players = [player1, player2, player3, player4];//玩家列表
+                let fistPlayer;//首家
+                let firstPlayerRole;//首家的身分
+                //前置：C3取2
+                let goodRoles = ["管理員","版主","資深鄉民"];//好人的角色列表
+                let badRoles = ["冒充者","駭客"];//壞人的角色列表
+                let index=Math.floor(Math.random()*goodRoles.length); //從好人的角色中選出一個
+                goodRoles.splice(index,1); //把選出來那一個從陣列中刪除
+                console.log(goodRoles);
+                this.rolesList = [...goodRoles , ...badRoles]; //把好人和壞人的角色列表合併成所有的角色列表
+                console.log(this.rolesList); 
+            }
+            roleAssign(){
+                //隨機分配各個玩家的角色
+                for(let i = 0; i < 4; i++){
+                        const randIndex = Math.floor(Math.random() * this.rolesList.length);
+                        this.players[i].role = this.rolesList[randIndex]
+                        this.rolesList.splice(randIndex, 1);
+                }
+                
+                //隨機選出首家
+                const randIndex2 = Math.floor(Math.random() * 4);
+                this.players[randIndex2].isFirstPlayer = true;
+                this.firstPlayerRole = this.players[randIndex2].role;
+                this.fistPlayer = this.players[randIndex2];
+
+                console.log(player1.name, player1.id, player1.role, player1.isFirstPlayer);
+                console.log(player2.name, player2.id, player2.role, player2.isFirstPlayer);
+                console.log(player3.name, player3.id, player3.role, player3.isFirstPlayer);
+                console.log(player4.name, player4.id, player4.role, player4.isFirstPlayer);
+
+            }
+
+            //資訊給予：告知玩家身分即應知道的資訊
+            givingInfo(player){
+
+                if(player.role == "管理員"){
+                    player.gameInfo = `姓名：${player.name}  ID:${player.id} 你是管理員，首家的身分是${this.firstPlayerRole}`;
+                    console.log(player.gameInfo)
+                }
+                else if(player.role == "冒充者"){
+                    player.gameInfo = `姓名：${player.name}  ID:${player.id} 你是冒充者，駭客是${this.players.role}`;
+                    console.log(player.gameInfo)
+                }
+                else{
+                    player.gameInfo = `姓名：${player.name}  ID:${player.id} 你是${player.role}`;
+                    console.log(player.gameInfo)
+                }
+            }
+        }
+
+        let player1 = new Player('A',111);
+        let player2 = new Player('B',222);
+        let player3 = new Player('C',333);
+        let player4 = new Player('D',444);
+        Game1 = new Game(player1, player2, player3, player4);
+        Game1.roleAssign();
+        Game1.givingInfo(player1);
+        Game1.givingInfo(player2);
+        Game1.givingInfo(player3);
+        Game1.givingInfo(player4);
+
+    </script>
+</head>
+<body>
+</body>
+</html>
