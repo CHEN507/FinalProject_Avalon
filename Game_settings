@@ -22,6 +22,7 @@
                 this.players = [player1, player2, player3, player4];//玩家列表
                 let fistPlayer;//首家
                 let firstPlayerRole;//首家的身分
+                let Hackname;//駭客的玩家名稱
                 //前置：C3取2
                 let goodRoles = ["管理員","版主","資深鄉民"];//好人的角色列表
                 let badRoles = ["冒充者","駭客"];//壞人的角色列表
@@ -30,13 +31,19 @@
                 console.log(goodRoles);
                 this.rolesList = [...goodRoles , ...badRoles]; //把好人和壞人的角色列表合併成所有的角色列表
                 console.log(this.rolesList); 
-            }
+                }
+
             roleAssign(){
                 //隨機分配各個玩家的角色
                 for(let i = 0; i < 4; i++){
-                        const randIndex = Math.floor(Math.random() * this.rolesList.length);
-                        this.players[i].role = this.rolesList[randIndex]
-                        this.rolesList.splice(randIndex, 1);
+
+                    const randIndex = Math.floor(Math.random() * this.rolesList.length);
+                    this.players[i].role = this.rolesList[randIndex]
+                    this.rolesList.splice(randIndex, 1);
+
+                    if(this.players[i].role == "駭客"){
+                    this.Hackname = this.players[i].name;}//找出駭客的玩家名字
+
                 }
                 
                 //隨機選出首家
@@ -60,7 +67,7 @@
                     console.log(player.gameInfo)
                 }
                 else if(player.role == "冒充者"){
-                    player.gameInfo = `姓名：${player.name}  ID:${player.id} 你是冒充者，駭客是${this.players.role}`;
+                    player.gameInfo = `姓名：${player.name}  ID:${player.id} 你是冒充者，駭客是${this.Hackname}`;
                     console.log(player.gameInfo)
                 }
                 else{
