@@ -3,7 +3,7 @@ import {utility} from './util.js'
 import {CardManager} from './modules/card-manager.js'
 
 const socket = io();
-
+//測試加一行註解
 class Game {
     constructor(accessCode, reveals, size, deck, time, hasDreamWolf) {
         this.accessCode = accessCode;
